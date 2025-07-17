@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience Portal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      height: 100vh;
+      background: #0e0e0e;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      color: #f0f0f0;
+      position: relative;
+    }
+
+    /* Particle Background */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .particles span {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(0, 255, 255, 0.4);
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Wrapper */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 50px;
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Entrance animation for heading */
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideFadeIn 1s forwards ease-out;
+    }
+    @keyframes slideFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 3D Button */
+    button {
+      padding: 15px 50px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      background: linear-gradient(145deg, #00e6e6, #009999);
+      box-shadow: 0 6px 0 #005f5f;
+      transition: all 0.2s ease;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+    }
+    button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(0, 255, 255, 0.2);
+    }
+
+    .credit {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      color: #777;
+      z-index: 1;
+      opacity: 0;
+      animation: slideFadeIn 1s forwards ease-out 0.5s;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles"></div>
+
+  <div class="wrapper">
+    <h1>Welcome to the Experience</h1>
+    <button onclick="startExperience()">Launch Experience</button>
+  </div>
+
+  <audio id="trapAudio" loop>
+    <source src="assets/audio.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="credit">©2025 BY Kaagaz</div>
+
+  <script>
+    // Generate particles
+    const particleContainer = document.querySelector('.particles');
+    for (let i = 0; i < 60; i++) {
+      const dot = document.createElement('span');
+      dot.style.left = Math.random() * 100 + 'vw';
+      dot.style.animationDuration = (5 + Math.random() * 10) + 's';
+      dot.style.animationDelay = Math.random() * 10 + 's';
+      particleContainer.appendChild(dot);
+    }
+
+    function startExperience() {
+      const audio = document.getElementById("trapAudio");
+      audio.volume = 1;
+      audio.play();
+
+      const btn = document.querySelector("button");
+      btn.disabled = true;
+      btn.innerText = "Launching...";
+      setTimeout(() => {
+        btn.style.display = "none";
+        document.querySelector("h1").innerText = "Enjoy the experience";
+      }, 1500);
+
+      setInterval(() => {
+        if (audio.volume < 1) {
+          audio.volume = 1;
+        }
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>
