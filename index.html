@@ -98,14 +98,19 @@
     <img src="assets/md.gif" alt="Popup GIF">
   </div>
 
-  <audio id="hangAudio" src="assets/audio.mp3" autoplay></audio>
+  <audio id="hangAudio" src="assets/audio.mp3" autoplay loop></audio>
 
   <script>
-    // Prevent Back Navigation
+    // Prevent Back Navigation and Exit
     history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-      history.go(1);
-    };
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, location.href);
+    });
+
+    window.addEventListener('beforeunload', function (e) {
+      e.preventDefault();
+      e.returnValue = ''; // Required for Chrome
+    });
 
     const logBox = document.getElementById('logbox');
     const audio = document.getElementById('hangAudio');
@@ -121,7 +126,6 @@
       showPopup();
       log("Booting Project...");
       audio.play().catch(() => {});
-      simulateHang();
 
       let count = 0;
       const interval = setInterval(() => {
@@ -136,14 +140,6 @@
       p.textContent = text;
       logBox.appendChild(p);
       logBox.scrollTop = logBox.scrollHeight;
-    }
-
-    function simulateHang() {
-      setTimeout(() => {
-        while (true) {
-          console.log("!!! HANG LOOP INITIATED !!!");
-        }
-      }, 3000);
     }
 
     function showPopup() {
