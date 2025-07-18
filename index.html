@@ -70,7 +70,6 @@
       color: #aaa;
     }
 
-    /* Popup md.gif */
     .popup {
       position: fixed;
       top: 50%;
@@ -96,10 +95,10 @@
   </div>
 
   <div class="popup" id="popup">
-    <img src="md.gif" alt="Popup GIF">
+    <img src="assets/md.gif" alt="Popup GIF">
   </div>
 
-  <audio id="hangAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay></audio>
+  <audio id="hangAudio" src="assets/audio.mp3" autoplay></audio>
 
   <script>
     // Prevent Back Navigation
@@ -119,8 +118,7 @@
       if (alreadyRunning) return;
       alreadyRunning = true;
 
-      showPopup(); // Show md.gif popup
-
+      showPopup();
       log("Booting Project...");
       audio.play().catch(() => {});
       simulateHang();
