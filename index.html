@@ -2,156 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Experience Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GameDev Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      height: 100vh;
-      background: #0e0e0e;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
-      color: #f0f0f0;
-      position: relative;
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Particle Background */
-    .particles {
-      position: absolute;
+    html, body {
       width: 100%;
       height: 100%;
-      z-index: 0;
+      background-color: #0e0e0e;
+      font-family: 'Inter', sans-serif;
+      color: #eaeaea;
       overflow: hidden;
     }
-    .particles span {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: rgba(0, 255, 255, 0.4);
-      border-radius: 50%;
-      animation: float 10s linear infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-    }
 
-    /* Wrapper */
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      top: 50%;
-      left: 50%;
+    .center {
+      position: absolute;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      background: rgba(255, 255, 255, 0.03);
-      padding: 50px;
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* Entrance animation for heading */
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 30px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideFadeIn 1s forwards ease-out;
-    }
-    @keyframes slideFadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* 3D Button */
-    button {
-      padding: 15px 50px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 50px;
-      color: white;
-      cursor: pointer;
-      background: linear-gradient(145deg, #00e6e6, #009999);
-      box-shadow: 0 6px 0 #005f5f;
-      transition: all 0.2s ease;
-      perspective: 1000px;
-      transform-style: preserve-3d;
-    }
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
-    }
-    button:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 4px rgba(0, 255, 255, 0.2);
-    }
-
-    .credit {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.8rem;
-      color: #777;
+      text-align: center;
       z-index: 1;
-      opacity: 0;
-      animation: slideFadeIn 1s forwards ease-out 0.5s;
+    }
+
+    h1 {
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1em;
+      background: #1a1a1a;
+      border: 1px solid #444;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease;
+    }
+
+    button:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #logBox {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60%;
+      background: #111;
+      padding: 10px;
+      overflow-y: scroll;
+      font-size: 0.85em;
+      border-top: 1px solid #333;
+      display: none;
+      animation: fadeInUp 1s ease;
+    }
+
+    .log-line {
+      font-family: monospace;
+      color: #0f0;
+    }
+
+    #noise {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif') center center / cover;
+      z-index: 9999;
+      display: none;
+    }
+
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="particles"></div>
-
-  <div class="wrapper">
-    <h1>Welcome to the Experience</h1>
-    <button onclick="startExperience()">Launch Experience</button>
+  <div class="center" id="mainUI">
+    <h1>GameDev Project</h1>
+    <button onclick="triggerHang()">Show Project</button>
   </div>
 
-  <audio id="trapAudio" loop>
-    <source src="assets/audio.mp3" type="audio/mpeg" />
-    Your browser does not support the audio element.
+  <div id="logBox"></div>
+
+  <div id="noise"></div>
+
+  <audio id="hangAudio" autoplay loop>
+    <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
   </audio>
 
-  <div class="credit">©2025 BY Kaagaz</div>
-
   <script>
-    // Generate particles
-    const particleContainer = document.querySelector('.particles');
-    for (let i = 0; i < 60; i++) {
-      const dot = document.createElement('span');
-      dot.style.left = Math.random() * 100 + 'vw';
-      dot.style.animationDuration = (5 + Math.random() * 10) + 's';
-      dot.style.animationDelay = Math.random() * 10 + 's';
-      particleContainer.appendChild(dot);
-    }
+    let hanging = false;
 
-    function startExperience() {
-      const audio = document.getElementById("trapAudio");
+    function triggerHang() {
+      if (hanging) return;
+      hanging = true;
+
+      // Max out the audio
+      const audio = document.getElementById('hangAudio');
       audio.volume = 1;
       audio.play();
 
-      const btn = document.querySelector("button");
-      btn.disabled = true;
-      btn.innerText = "Launching...";
-      setTimeout(() => {
-        btn.style.display = "none";
-        document.querySelector("h1").innerText = "Enjoy the experience";
-      }, 1500);
+      // Visual glitch
+      document.getElementById('noise').style.display = 'block';
 
+      // Show fake logs
+      const logBox = document.getElementById('logBox');
+      logBox.style.display = 'block';
+      const mainUI = document.getElementById('mainUI');
+      mainUI.style.display = 'none';
+
+      let logCounter = 0;
       setInterval(() => {
-        if (audio.volume < 1) {
-          audio.volume = 1;
-        }
+        const logLine = document.createElement('div');
+        logLine.className = 'log-line';
+        logLine.textContent = `[ERROR] 0x${(Math.random()*10000000|0).toString(16)} - System overloaded at ${new Date().toLocaleTimeString()}`;
+        logBox.appendChild(logLine);
+        logBox.scrollTop = logBox.scrollHeight;
       }, 100);
+
+      // Fake lag: UI freeze by blocking main thread
+      setInterval(() => {
+        const start = Date.now();
+        while (Date.now() - start < 500) {} // short block loop
+      }, 1000);
     }
+
+    // Block back button
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
   </script>
 
 </body>
